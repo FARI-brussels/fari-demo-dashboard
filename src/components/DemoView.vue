@@ -23,14 +23,17 @@
             home
           </button>
           <div class="dialog" ref="dialogRef" :class="{ 'is-maximized': isMaximized }">
-            <div class="iframe-container rounded-sm">
+            <div class="iframe-container" :class="{ 'rounded-sm': !isMaximized }">
               <Transition name="slide" mode="out-in">
                 <iframe
                   v-if="selectedDemoUrl"
                   :key="selectedDemoUrl"
                   :src="selectedDemoUrl"
-                  class="demo-iframe rounded-sm"
-                  :class="{ 'demo-iframe-active': selectedDemoUrl }"
+                  class="demo-iframe"
+                  :class="{
+                    'demo-iframe-active': selectedDemoUrl,
+                    'rounded-sm': !isMaximized,
+                  }"
                   frameborder="0"
                 ></iframe>
               </Transition>
