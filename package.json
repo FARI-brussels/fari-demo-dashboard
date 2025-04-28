@@ -1,12 +1,19 @@
 {
   "name": "fari-demo-view",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "type": "module",
   "description": "for displaying demos",
   "main": "dist-lib/fari-demo-view.cjs.js",
   "module": "dist-lib/fari-demo-view.es.js",
   "types": "dist-lib/types.ts",
+  "exports": {
+    ".": {
+      "import": "./dist-lib/fari-demo-view.es.js",
+      "require": "./dist-lib/fari-demo-view.cjs.js"
+    },
+    "./style.css": "./dist-lib/fari-demo-view.css"
+  },
   "files": [
     "dist-lib"
   ],
