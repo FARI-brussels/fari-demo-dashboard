@@ -136,6 +136,5 @@ const v = [
   }
 }), P = /* @__PURE__ */ E(J, [["__scopeId", "data-v-5cccf766"]]);
 export {
-  P as DemoView,
   P as default
 };

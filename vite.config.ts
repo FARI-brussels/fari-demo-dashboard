@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => ({
           lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'FariDemoView',
-            fileName: 'fari-demo-view',
+            fileName: (format) => `fari-demo-view.${format}.js`, // Ensure .es.js and .cjs.js
             formats: ['es', 'cjs'],
           },
           rollupOptions: {
