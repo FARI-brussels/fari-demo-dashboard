@@ -1,4 +1,4 @@
-import { defineComponent as E, createElementBlock as i, openBlock as l, createElementVNode as e, toDisplayString as k, ref as m, onMounted as I, watch as M, createBlock as D, createCommentVNode as p, Fragment as C, renderList as w, unref as $, Teleport as N, createVNode as B, Transition as V, withCtx as z, normalizeClass as f } from "vue";
+import { defineComponent as z, createElementBlock as s, openBlock as e, createElementVNode as a, toDisplayString as b, ref as m, onMounted as M, watch as N, createBlock as D, createCommentVNode as f, Fragment as C, renderList as w, unref as $, Teleport as R, createVNode as B, Transition as V, withCtx as x, normalizeClass as p } from "vue";
 const v = [
   {
     slug: "air-quality",
@@ -14,7 +14,7 @@ const v = [
     url: "https://which-content-is-real.netlify.app",
     thumbnail: "/thumbnails/which-content-is-real.png"
   }
-], R = { class: "demo-card__header" }, F = { class: "font-weight-black title" }, O = { class: "color-green" }, S = /* @__PURE__ */ E({
+], A = { class: "demo-card__header" }, F = { class: "font-weight-black title" }, O = { class: "color-green" }, S = /* @__PURE__ */ z({
   __name: "DemoCard",
   props: {
     title: {},
@@ -22,114 +22,120 @@ const v = [
     value: {}
   },
   setup(c) {
-    return (o, s) => (l(), i("div", {
+    return (l, o) => (e(), s("div", {
       class: "demo-card bg-color-blue rounded-sm",
-      onClick: s[0] || (s[0] = (u) => o.$emit("start", o.value))
+      onClick: o[0] || (o[0] = (u) => l.$emit("start", l.value))
     }, [
-      e("div", R, [
-        e("h3", F, k(o.title), 1),
-        e("p", O, k(o.description), 1)
+      a("div", A, [
+        a("h3", F, b(l.title), 1),
+        a("p", O, b(l.description), 1)
       ])
     ]));
   }
-}), q = (c, o) => {
-  const s = c.__vccOpts || c;
-  for (const [u, d] of o)
-    s[u] = d;
-  return s;
-}, T = /* @__PURE__ */ q(S, [["__scopeId", "data-v-7ee23914"]]), L = { class: "main bg-color-primary" }, Q = { class: "card-grid" }, U = {
+}), E = (c, l) => {
+  const o = c.__vccOpts || c;
+  for (const [u, d] of l)
+    o[u] = d;
+  return o;
+}, T = /* @__PURE__ */ E(S, [["__scopeId", "data-v-7ee23914"]]), L = { class: "main p-xl bg-color-primary" }, Q = { class: "card-grid" }, U = {
   key: 0,
   class: "dialog-backdrop"
-}, W = { class: "iframe-container rounded-sm" }, j = ["src"], G = { class: "gallery" }, H = ["onClick"], J = ["src", "alt"], K = /* @__PURE__ */ E({
+}, W = ["src"], j = { class: "gallery" }, G = ["onClick"], H = ["src", "alt"], J = /* @__PURE__ */ z({
   __name: "DemoView",
   props: {
     initialDemo: {},
     fullscreen: { type: Boolean }
   },
   setup(c) {
-    const o = c, s = m(!1);
-    I(() => s.value = !0);
-    const u = !1, d = m(!1), n = m(null), _ = m(!1), x = m(null), h = (a) => {
-      g(a) && (d.value = !0, _.value = u);
+    const l = c, o = m(!1);
+    M(() => o.value = !0);
+    const u = !1, d = m(!1), n = m(null), r = m(!1), q = m(null), h = (i) => {
+      g(i) && (d.value = !0, r.value = u);
     };
-    function g(a) {
-      const r = v.find((t) => t.slug === a);
-      return r ? (n.value = r.url, _.value = u, !0) : !1;
+    function g(i) {
+      const _ = v.find((t) => t.slug === i);
+      return _ ? (n.value = _.url, r.value = u, !0) : !1;
     }
-    const A = () => {
-      d.value = !1, n.value = null, _.value = !1;
+    const I = () => {
+      d.value = !1, n.value = null, r.value = !1;
     };
-    return M(
-      () => o.initialDemo,
-      (a) => a && h(a),
+    return N(
+      () => l.initialDemo,
+      (i) => i && h(i),
       {
         immediate: !0
       }
-    ), (a, r) => (l(), i("div", L, [
-      r[0] || (r[0] = e("h2", { class: "title" }, "Available components", -1)),
-      e("div", Q, [
-        (l(!0), i(C, null, w($(v), ({ title: t, description: y, slug: b }) => (l(), D(T, {
+    ), (i, _) => (e(), s("div", L, [
+      a("div", Q, [
+        (e(!0), s(C, null, w($(v), ({ title: t, description: y, slug: k }) => (e(), D(T, {
           title: t,
-          key: b,
+          key: k,
           description: y,
-          value: b,
+          value: k,
           onStart: h
         }, null, 8, ["title", "description", "value"]))), 128))
       ]),
-      s.value ? (l(), D(N, {
+      o.value ? (e(), D(R, {
         key: 0,
         to: "body"
       }, [
         B(V, { name: "dialog" }, {
-          default: z(() => [
-            d.value ? (l(), i("div", U, [
-              e("button", {
+          default: x(() => [
+            d.value ? (e(), s("div", U, [
+              (e(), s("button", {
+                key: 0,
                 class: "close-button",
-                onClick: A
-              }, "✕"),
-              e("div", {
-                class: f(["dialog", { "is-maximized": _.value }]),
+                onClick: I
+              }, "✕")),
+              a("div", {
+                class: p(["dialog", { "is-maximized": r.value }]),
                 ref_key: "dialogRef",
-                ref: x
+                ref: q
               }, [
-                e("div", W, [
+                a("div", {
+                  class: p(["iframe-container", { "rounded-sm": !r.value }])
+                }, [
                   B(V, {
                     name: "slide",
                     mode: "out-in"
                   }, {
-                    default: z(() => [
-                      n.value ? (l(), i("iframe", {
+                    default: x(() => [
+                      n.value ? (e(), s("iframe", {
                         key: n.value,
                         src: n.value,
-                        class: f(["demo-iframe rounded-sm", { "demo-iframe-active": n.value }]),
+                        class: p(["demo-iframe", {
+                          "demo-iframe-active": n.value,
+                          "rounded-sm": !r.value
+                        }]),
                         frameborder: "0"
-                      }, null, 10, j)) : p("", !0)
+                      }, null, 10, W)) : f("", !0)
                     ]),
                     _: 1
                   })
-                ]),
-                e("div", G, [
-                  (l(!0), i(C, null, w($(v), (t) => (l(), i("div", {
+                ], 2),
+                a("div", j, [
+                  (e(!0), s(C, null, w($(v), (t) => (e(), s("div", {
                     key: t.slug,
-                    class: f(["gallery-item rounded-sm", { "border-color-secondary active": n.value === t.url }]),
+                    class: p(["gallery-item rounded-sm", { "border-color-secondary active": n.value === t.url }]),
                     onClick: (y) => g(t.slug)
                   }, [
-                    e("img", {
+                    a("img", {
                       src: t.thumbnail,
                       alt: t.title,
                       class: "gallery-thumbnail rounded-sm"
-                    }, null, 8, J)
-                  ], 10, H))), 128))
+                    }, null, 8, H)
+                  ], 10, G))), 128))
                 ])
               ], 2)
-            ])) : p("", !0)
+            ])) : f("", !0)
           ]),
           _: 1
         })
-      ])) : p("", !0)
+      ])) : f("", !0)
     ]));
   }
-}), X = /* @__PURE__ */ q(K, [["__scopeId", "data-v-a65a159b"]]);
+}), P = /* @__PURE__ */ E(J, [["__scopeId", "data-v-5cccf766"]]);
 export {
-  X as default
+  P as DemoView,
+  P as default
 };

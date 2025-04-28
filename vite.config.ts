@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
     mode === 'lib'
       ? {
           lib: {
-            entry: path.resolve(__dirname, 'src/components/DemoView.vue'),
+            entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'FariDemoView',
             fileName: 'fari-demo-view',
             formats: ['es', 'cjs'],

@@ -1,8 +1,15 @@
 {
-  "name": "fari-demo-dashboard",
-  "version": "0.0.0",
-  "private": true,
+  "name": "fari-demo-view",
+  "version": "0.0.1",
+  "private": false,
   "type": "module",
+  "description": "for displaying demos",
+  "main": "dist-lib/fari-demo-view.cjs.js",
+  "module": "dist-lib/fari-demo-view.es.js",
+  "types": "dist-lib/types.ts",
+  "files": [
+    "dist-lib"
+  ],
   "scripts": {
     "dev": "vite",
     "dev:fullscreen": "VITE_FULLSCREEN=true vite",
