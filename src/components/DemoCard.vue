@@ -8,12 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { type DemoName } from '@/types'
-
 defineProps<{
   title: string
   description: string
-  value: DemoName
+  value: string
 }>()
 </script>
 

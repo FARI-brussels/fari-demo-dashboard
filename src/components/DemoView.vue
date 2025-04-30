@@ -1,11 +1,11 @@
 <template>
   <div class="main p-xl bg-color-primary">
-    <div class="card-grid">
+    <div class="card-grid" v-if="demos?.length">
       <DemoCard
         v-for="{ title, description, slug } in demos"
-        :title="title"
+        :title="title.en"
         :key="slug"
-        :description="description"
+        :description="description.en"
         :value="slug"
         @start="openDialog"
       />
@@ -46,7 +46,7 @@
                 :class="{ 'border-color-secondary active': selectedDemoUrl === demo.url }"
                 @click="selectDemo(demo.slug)"
               >
-                <img :src="demo.thumbnail" :alt="demo.title" class="gallery-thumbnail rounded-sm" />
+                <img v-if="demo.image" :src="demo.image" class="gallery-image rounded-sm" />
               </div>
             </div>
           </div>
@@ -59,11 +59,12 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import DemoCard from './DemoCard.vue'
-import { type DemoName, demos } from '@/types'
+import { type Demo } from '@/types'
 
 const props = defineProps<{
   initialDemo?: string
   fullscreen?: boolean
+  demos?: Demo[]
 }>()
 
 const isClient = ref(false)
@@ -75,7 +76,7 @@ const selectedDemoUrl = ref<string | null>(null)
 const isMaximized = ref(false)
 const dialogRef = ref<HTMLElement | null>(null)
 
-const openDialog = (value: DemoName) => {
+const openDialog = (value: string) => {
   const foundDemo = selectDemo(value)
   if (foundDemo) {
     isDialogOpen.value = true
@@ -83,8 +84,8 @@ const openDialog = (value: DemoName) => {
   }
 }
 
-function selectDemo(value: DemoName) {
-  const demo = demos.find((d) => d.slug === value)
+function selectDemo(value: string) {
+  const demo = props?.demos?.find((d) => d.slug === value)
   if (demo) {
     selectedDemoUrl.value = demo.url
     isMaximized.value = isFullscreenMode
@@ -101,7 +102,7 @@ const closeDialog = () => {
 
 watch(
   () => props.initialDemo,
-  (val) => val && openDialog(val as DemoName),
+  (val) => val && openDialog(val),
   {
     immediate: true,
   },
@@ -243,7 +244,7 @@ watch(
   background: #f0f0f0;
 }
 
-.gallery-thumbnail {
+.gallery-image {
   width: 160px;
   height: 90px;
   object-fit: cover;
@@ -293,3 +294,4 @@ watch(
   display: none; /* Hide gallery when maximized */
 }
 </style>
+@/types/types @/types/demo @/types/demos

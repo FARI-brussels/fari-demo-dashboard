@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Demo } from '@/types'
+import { type Demo } from '@/types/demos'
 
 defineProps<{
   demos: Demo[]
@@ -26,3 +26,4 @@ defineProps<{
   gap: 1.5rem;
 }
 </style>
+@/types/types @/types/demo @/types/demos
