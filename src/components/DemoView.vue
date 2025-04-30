@@ -46,7 +46,11 @@
                 :class="{ 'border-color-secondary active': selectedDemoUrl === demo.url }"
                 @click="selectDemo(demo.slug)"
               >
-                <img v-if="demo.image" :src="demo.image" class="gallery-image rounded-sm" />
+                <img
+                  v-if="demo.image"
+                  :src="demo.image"
+                  class="gallery-image rounded-sm demo-thumbnail"
+                />
               </div>
             </div>
           </div>
