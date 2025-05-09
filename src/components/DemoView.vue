@@ -1,6 +1,6 @@
 <template>
   <div class="main p-xl bg-color-primary">
-    <div class="card-grid" v-if="demos?.length">
+    <div v-if="demos?.length" class="card-grid">
       <DemoCard
         v-for="{ title, description, slug } in demos"
         :title="title.en"
@@ -14,28 +14,36 @@
     <Teleport to="body" v-if="isClient">
       <Transition name="dialog">
         <div v-if="isDialogOpen" class="dialog-backdrop">
-          <button v-if="!isFullscreenMode" class="close-button" @click="closeDialog">✕</button>
-          <button
-            v-else
-            class="home-button rounded-sm p-xs bg-color-blue-light color-white font-weight-black"
-            @click="closeDialog"
+          <div
+            class="dialog"
+            ref="dialogRef"
+            :class="{
+              'is-maximized': isMaximized,
+            }"
           >
-            home
-          </button>
-          <div class="dialog" ref="dialogRef" :class="{ 'is-maximized': isMaximized }">
             <div class="iframe-container" :class="{ 'rounded-sm': !isMaximized }">
               <Transition name="slide" mode="out-in">
-                <iframe
-                  v-if="selectedDemoUrl"
-                  :key="selectedDemoUrl"
-                  :src="selectedDemoUrl"
-                  class="demo-iframe"
-                  :class="{
-                    'demo-iframe-active': selectedDemoUrl,
-                    'rounded-sm': !isMaximized,
-                  }"
-                  frameborder="0"
-                ></iframe>
+                <div v-if="selectedDemoUrl" :key="selectedDemoUrl" class="iframe-wrapper">
+                  <button v-if="!isFullscreenMode" class="close-button" @click="closeDialog">
+                    ✕
+                  </button>
+                  <button
+                    v-else
+                    class="home-button rounded-sm p-xs bg-color-blue-light color-white font-weight-black"
+                    @click="closeDialog"
+                  >
+                    home
+                  </button>
+                  <iframe
+                    :src="selectedDemoUrl"
+                    class="demo-iframe"
+                    :class="{
+                      'demo-iframe-active': selectedDemoUrl,
+                      'rounded-sm': !isMaximized,
+                    }"
+                    frameborder="0"
+                  ></iframe>
+                </div>
               </Transition>
             </div>
             <div class="gallery">
@@ -65,37 +73,26 @@ import { ref, watch, onMounted } from 'vue'
 import DemoCard from './DemoCard.vue'
 import { type Demo } from '@/types'
 
-const props = defineProps<{
+interface Props {
   initialDemo?: string
   fullscreen?: boolean
   demos?: Demo[]
-}>()
+}
 
+const props = defineProps<Props>()
 const isClient = ref(false)
-onMounted(() => (isClient.value = true))
-
 const isFullscreenMode = import.meta.env.VITE_FULLSCREEN === 'true'
 const isDialogOpen = ref(false)
 const selectedDemoUrl = ref<string | null>(null)
 const isMaximized = ref(false)
 const dialogRef = ref<HTMLElement | null>(null)
 
-const openDialog = (value: string) => {
-  const foundDemo = selectDemo(value)
-  if (foundDemo) {
-    isDialogOpen.value = true
-    isMaximized.value = isFullscreenMode
-  }
-}
+onMounted(() => (isClient.value = true))
 
-function selectDemo(value: string) {
-  const demo = props?.demos?.find((d) => d.slug === value)
-  if (demo) {
-    selectedDemoUrl.value = demo.url
-    isMaximized.value = isFullscreenMode
-    return true
-  }
-  return false
+const openDialog = (slug: string) => {
+  if (!selectDemo(slug)) return
+  isDialogOpen.value = true
+  isMaximized.value = isFullscreenMode
 }
 
 const closeDialog = () => {
@@ -104,12 +101,19 @@ const closeDialog = () => {
   isMaximized.value = false
 }
 
+function selectDemo(slug: string) {
+  const demo = props?.demos?.find((d) => d.slug === slug)
+  if (!demo) return false
+
+  selectedDemoUrl.value = demo.url
+  isMaximized.value = isFullscreenMode
+  return true
+}
+
 watch(
   () => props.initialDemo,
-  (val) => val && openDialog(val),
-  {
-    immediate: true,
-  },
+  (slug) => slug && openDialog(slug),
+  { immediate: true },
 )
 </script>
 
@@ -142,6 +146,7 @@ watch(
 
 .dialog {
   background: transparent;
+  position: relative;
   border-radius: 8px;
   width: min(90%, 1920px);
   max-height: 90vh;
@@ -158,27 +163,6 @@ watch(
   margin: 0;
 }
 
-.close-button {
-  background: #ff4d4f;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 13rem;
-  right: 24.5rem;
-  z-index: 1001;
-  &:hover {
-    background: #d9363e;
-  }
-}
-
 .home-button {
   border: none;
   cursor: pointer;
@@ -188,17 +172,8 @@ watch(
   z-index: 1001;
 }
 
-:fullscreen .demo-iframe {
-  transform: scale(1);
-  width: 100%;
-  height: 100%;
-}
-
-:fullscreen .gallery {
-  display: none;
-}
-
 .iframe-container {
+  position: relative;
   flex: 1;
   overflow: hidden;
   background: transparent;
@@ -254,6 +229,64 @@ watch(
   object-fit: cover;
 }
 
+.iframe-wrapper {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+
+.is-maximized {
+  .demo-iframe {
+    transform: scale(1);
+    width: 100%;
+    height: 100%;
+  }
+  .iframe-container {
+    .iframe-wrapper {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .gallery {
+    display: none;
+  }
+}
+
+.close-button {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10rem;
+  right: 18rem;
+  z-index: 1001;
+  &:hover {
+    background: #d9363e;
+  }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(100%) scale(0.6);
+}
+
+.slide-leave-to {
+  transform: translateX(-100%) scale(0.6);
+}
+
 .dialog-enter-active,
 .dialog-leave-active {
   transition: opacity 0.3s ease;
@@ -287,15 +320,4 @@ watch(
 .slide-leave-to {
   transform: translateX(-100%) scale(0.6);
 }
-
-.is-maximized .demo-iframe {
-  transform: scale(1);
-  width: 100%;
-  height: 100%;
-}
-
-.is-maximized .gallery {
-  display: none; /* Hide gallery when maximized */
-}
 </style>
-@/types/types @/types/demo @/types/demos
