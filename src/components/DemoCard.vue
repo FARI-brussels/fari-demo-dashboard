@@ -1,9 +1,7 @@
 <template>
   <div class="demo-card bg-color-blue rounded-sm" @click="$emit('start', value)">
-    <div class="demo-card__header">
-      <h3 class="font-weight-black title">{{ title }}</h3>
-      <p class="color-green">{{ description }}</p>
-    </div>
+    <h3 class="font-weight-black title">{{ title }}</h3>
+    <p class="color-blue-light description">{{ description }}</p>
   </div>
 </template>
 
@@ -17,13 +15,15 @@ defineProps<{
 
 <style scoped lang="scss">
 .demo-card {
+  position: relative;
   box-sizing: border-box;
   width: 17.5rem;
   height: 17.5rem;
   padding: 1rem;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   text-align: center;
   cursor: pointer;
   &:hover {
@@ -38,6 +38,8 @@ defineProps<{
   text-transform: uppercase;
 }
 .description {
+  margin-top: auto;
+  margin-bottom: 5rem;
   font-size: 1.2rem;
 }
 </style>
